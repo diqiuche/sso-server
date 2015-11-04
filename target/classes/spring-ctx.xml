@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+    http://www.springframework.org/schema/beans/spring-beans.xsd
+    http://www.springframework.org/schema/context  
+    http://www.springframework.org/schema/context/spring-context.xsd ">
+
+	<context:component-scan base-package="com.lyc.sso.server" />
+
+	<context:annotation-config />
+	
+	<bean class="com.lyc.sso.server.Config" init-method="refreshConfig"
+		destroy-method="destroy">
+		<property name="loginViewName" value="/login2" />
+		<property name="authenticationHandler">
+			<bean class="com.lyc.sso.server.service.CaptchaAuthenticationHandler" />
+		</property>
+		<property name="preLoginHandler">
+			<bean class="com.lyc.sso.server.service.CaptchaPreLoginHandler"/>
+		</property>
+		<!-- 
+		<property name="tokenTimeout" value="15" />
+		-->
+	</bean>
+</beans>

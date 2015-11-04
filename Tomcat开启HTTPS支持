@@ -1,0 +1,18 @@
+1、准备证书 （正规生产环境一般从权威认证机构购买，测试或内部系统可使用工具自己生成，非认证证书浏览器会有安全提示）
+	$JAVA_HOME/bin/keytool 
+		-genkey     // 生成证书
+		-alias tomcat // 指定证书别名，可以任意值
+		-keyalg RSA // 加官算法，此处选择了RSA
+		-keystore d:\tomcat.keystore // 证书密钥库存放位置
+		-validity 36500 // 指定证书有效期，单位为天，此处表示约100年 
+	回车执行命令后，按提示依次输入证书密钥库口令、名字与姓氏及其它信息、tomcat证书的密钥口令等
+	按情况输入即可，除口令外，其它信息可不填，证书口令可不填，表示使用与密钥库相同口令
+	成功执行后，在指定位置生成指定的密钥库文件
+2、设置tomcat server.xml
+	<Connector port="443" protocol="org.apache.coyote.http11.Http11Protocol"
+               maxThreads="150" SSLEnabled="true" scheme="https" secure="true"
+               clientAuth="false" sslProtocol="TLS" 
+               keystoreFile="D:/tomcat.keystore" // 密钥库位置 
+               keystorePass="123456"             // 密钥库密码
+               />
+		
